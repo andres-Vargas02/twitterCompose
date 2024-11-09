@@ -68,13 +68,18 @@ fun TweetItem(tweet: Tweet) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-
                 // Texto del contenido del tweet
                 Text(
                     text = tweet.content,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(top = 8.dp)
                 )
+                // Imagen del contenido del tweet
+                Image(
+                    painter = painterResource(id = tweet.contentImage),
+                    contentDescription = "Profile"
+                )
+
 
                 // Acciones de interacción (iconos)
                 Row(

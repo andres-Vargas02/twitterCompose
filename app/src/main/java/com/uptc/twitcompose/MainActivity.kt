@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
         )
         val images = listOf(R.drawable.u2, R.drawable.u3, R.drawable.u4, R.drawable.u5)
         val contentSamples = listOf("Publicacion 1", "Publicacion 2", "Publicacion 3", "Publicacion 4")
+        val backgrounds = listOf(R.drawable.background1, R.drawable.background2, R.drawable.background3, R.drawable.background4)
 
         return users.flatMapIndexed { index, (name, handle) ->
             List(4) {
@@ -38,7 +39,8 @@ class MainActivity : ComponentActivity() {
                     userName = name,
                     userHandle = handle,
                     content = contentSamples[it % contentSamples.size],
-                    userImage = images[index % images.size]
+                    userImage = images[index % images.size],
+                    contentImage = backgrounds[it % backgrounds.size]
                 )
             }
         }.shuffled(Random(System.currentTimeMillis()))

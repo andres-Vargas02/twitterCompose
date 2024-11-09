@@ -4,6 +4,8 @@ data class Tweet(
     val userName: String,
     val userHandle: String,
     val content: String,
-    val userImage: Int
+    val userImage: Int,
+    val contentImage: Int
+
 )
 
