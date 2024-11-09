@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.uptc.twitcompose.model.Tweet
 import com.uptc.twitcompose.ui.theme.TwitcomposeTheme
 import com.uptc.twitcompose.ui.screens.TwitterScreen
+import com.uptc.twitcompose.ui.screens.UserTweetsScreen
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
@@ -13,6 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TwitcomposeTheme {
+                //UserTweetsScreen(userName = "User 2", tweets = generateTweetsForUsers())
                 TwitterScreen(tweets = generateTweetsForUsers())
             }
         }
