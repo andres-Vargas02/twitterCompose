@@ -14,8 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TwitcomposeTheme {
-                //UserTweetsScreen(userName = "User 2", tweets = generateTweetsForUsers())
-                TwitterScreen(tweets = generateTweetsForUsers())
+                UserTweetsScreen(userName = "User 2", tweets = generateTweetsForUsers())
+                //TwitterScreen(tweets = generateTweetsForUsers())
             }
         }
     }
