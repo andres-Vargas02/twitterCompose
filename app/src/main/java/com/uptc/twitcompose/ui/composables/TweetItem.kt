@@ -1,7 +1,10 @@
 package com.uptc.twitcompose.ui.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -10,27 +13,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.uptc.twitcompose.R
 import com.uptc.twitcompose.model.Tweet
+import com.uptc.twitcompose.model.generateSampleTweet
 
-/**
- * Composable que representa un elemento de tweet con la información del usuario y las acciones de interacción.
- * @param tweet Instancia de Tweet que contiene los detalles del tweet.
- */
 @Composable
-fun TweetItem(tweet: Tweet) {
+fun TweetItem(navController: NavController, tweet: Tweet) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable { navController.navigate("userTweets/${tweet.userName}") },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         ConstraintLayout(modifier = Modifier.padding(8.dp)) {
             val (profileImage, userInfoAndContent, actions) = createRefs()
-
-            // Imagen de perfil del usuario
             Image(
                 painter = painterResource(id = tweet.userImage),
                 contentDescription = "Profile",
@@ -42,8 +44,6 @@ fun TweetItem(tweet: Tweet) {
                         top.linkTo(parent.top)
                     }
             )
-
-            // Columna con información del usuario y contenido del tweet
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -68,37 +68,42 @@ fun TweetItem(tweet: Tweet) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                // Texto del contenido del tweet
                 Text(
                     text = tweet.content,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(top = 8.dp)
                 )
-                // Imagen del contenido del tweet
                 Image(
                     painter = painterResource(id = tweet.contentImage),
                     contentDescription = "Profile"
                 )
 
 
-                // Acciones de interacción (iconos)
-                Row(
-                    modifier = Modifier.padding(top = 8.dp)
-                ) {
-                    val iconSize = 24.dp
-                    val iconTint = MaterialTheme.colorScheme.primary
-                    val icons = listOf(
-                        R.drawable.ic_dialogue to "dialogue",
-                        R.drawable.ic_rt to "rt",
-                        R.drawable.ic_heart to "heart",
-                        R.drawable.ic_favorit to "favorite",
-                        R.drawable.ic_share to "share"
-                    )
+                val icons = listOf(
+                    R.drawable.ic_dialogue to "dialogue",
+                    R.drawable.ic_rt to "rt",
+                    R.drawable.ic_heart to "heart",
+                    R.drawable.ic_favorit to "favorite",
+                    R.drawable.ic_share to "share"
+                )
 
-                    icons.forEach { (iconId, description) ->
+                val iconWidth = 65.dp
+                val iconHeight = 24.dp
+                val iconTint = MaterialTheme.colorScheme.primary
+
+
+                LazyRow(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    items(icons) { (iconId, description) ->
                         IconButton(
-                            onClick = { /* Acción correspondiente */ },
-                            modifier = Modifier.size(iconSize)
+                            onClick = { },
+                            modifier = Modifier
+                                .width(iconWidth)
+                                .height(iconHeight)
+                                .weight(1f)
                         ) {
                             Icon(
                                 painter = painterResource(id = iconId),
@@ -106,10 +111,18 @@ fun TweetItem(tweet: Tweet) {
                                 tint = iconTint
                             )
                         }
-                        Spacer(modifier = Modifier.width(16.dp))
                     }
                 }
             }
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun TweetItemPreview() {
+    val navController = rememberNavController()
+    val tweet = generateSampleTweet()
+    TweetItem(navController = navController, tweet = tweet)
+}
+

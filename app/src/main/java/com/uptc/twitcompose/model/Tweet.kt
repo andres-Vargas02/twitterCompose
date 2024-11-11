@@ -6,6 +6,4 @@ data class Tweet(
     val content: String,
     val userImage: Int,
     val contentImage: Int
-
 )
-
