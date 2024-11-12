@@ -36,7 +36,7 @@ fun UserTweetsScreen(navController: NavController, userName: String, tweets: Lis
                 ) {
                     item {
                         Text(
-                            text = "$userName",
+                            text = userName,
                             style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.padding(end = 250.dp)
 

@@ -15,13 +15,13 @@ fun generateTweetsForUsers(): List<Tweet> {
     val backgrounds = listOf(R.drawable.background1, R.drawable.background2, R.drawable.background3, R.drawable.background4)
 
     return users.flatMapIndexed { index, (name, handle) ->
-        List(4) { tweetIndex ->
+        List(contentSamples.size) { tweetIndex ->
             Tweet(
                 userName = name,
                 userHandle = handle,
-                content = contentSamples[tweetIndex % contentSamples.size],
-                userImage = images[index % images.size],
-                contentImage = backgrounds[tweetIndex % backgrounds.size]
+                content = contentSamples[tweetIndex],
+                userImage = images.getOrElse(index) { images[0] },
+                contentImage = backgrounds.getOrElse(tweetIndex) { backgrounds[0] }
             )
         }
     }.shuffled()

@@ -18,7 +18,7 @@ fun AppNavHost(navController: NavHostController) {
             TwitterScreen(navController = navController, tweets = tweets)
         }
         composable("userTweets/{userName}") { backStackEntry ->
-            val userName = backStackEntry.arguments?.getString("userName") ?: ""
+            val userName = backStackEntry.arguments?.getString("userName").orEmpty()
             UserTweetsScreen(navController = navController, userName = userName, tweets = tweets)
         }
     }
