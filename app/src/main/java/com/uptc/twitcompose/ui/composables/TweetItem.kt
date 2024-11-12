@@ -21,7 +21,12 @@ import androidx.navigation.compose.rememberNavController
 import com.uptc.twitcompose.R
 import com.uptc.twitcompose.model.Tweet
 import com.uptc.twitcompose.model.generateSampleTweet
-
+/**
+ * Representa un ítem de tweet en la lista de tweets.
+ *
+ * @param navController Controlador de navegación.
+ * @param tweet Objeto de tipo Tweet con información de usuario y contenido.
+ */
 @Composable
 fun TweetItem(navController: NavController, tweet: Tweet) {
     Card(
@@ -33,6 +38,7 @@ fun TweetItem(navController: NavController, tweet: Tweet) {
     ) {
         ConstraintLayout(modifier = Modifier.padding(8.dp)) {
             val (profileImage, userInfoAndContent, actions) = createRefs()
+            // Imagen de perfil del usuario
             Image(
                 painter = painterResource(id = tweet.userImage),
                 contentDescription = "Profile",
@@ -44,6 +50,7 @@ fun TweetItem(navController: NavController, tweet: Tweet) {
                         top.linkTo(parent.top)
                     }
             )
+            // Información de usuario y contenido
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -78,7 +85,7 @@ fun TweetItem(navController: NavController, tweet: Tweet) {
                     contentDescription = "Profile"
                 )
 
-
+                // Íconos de interacción
                 val icons = listOf(
                     R.drawable.ic_dialogue to "dialogue",
                     R.drawable.ic_rt to "rt",

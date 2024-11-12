@@ -21,6 +21,11 @@ import com.uptc.twitcompose.model.Tweet
 import com.uptc.twitcompose.model.generateTweetsForUsers
 import com.uptc.twitcompose.ui.composables.TweetItem
 
+/**
+ * Pantalla principal que muestra una lista de Tweets.
+ * @param navController Controlador de navegación para navegar entre pantallas.
+ * @param tweets Lista de Tweets a mostrar.
+ */
 @Composable
 fun TwitterScreen(navController: NavController, tweets: List<Tweet>) {
     Scaffold(
@@ -30,25 +35,24 @@ fun TwitterScreen(navController: NavController, tweets: List<Tweet>) {
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(tweets) { tweet ->
                 TweetItem(navController = navController, tweet = tweet)
-                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+                Divider(thickness = 0.5.dp, color = Color.Gray)
             }
         }
     }
 }
 
+/**
+ * Barra superior con el logotipo y opciones de perfil y ajustes.
+ */
 @Composable
 fun TwitterTopBar() {
-    NavigationBar(
-        containerColor = Color.Transparent
-    ) {
+    NavigationBar(containerColor = Color.Transparent) {
         NavigationBarItem(
             icon = {
                 Image(
                     painter = painterResource(id = R.drawable.u1),
                     contentDescription = "Profile",
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape)
+                    modifier = Modifier.size(32.dp).clip(CircleShape)
                 )
             },
             selected = true,
@@ -80,21 +84,21 @@ fun TwitterTopBar() {
     }
 }
 
-
+/**
+ * Barra inferior con los iconos de navegación de la aplicación.
+ */
 @Composable
 fun TwitterBottomBar() {
     val iconSize = 28.dp
     val icons = listOf(
         R.drawable.ic_home to "Home",
-        R.drawable.ic_look to "look",
-        R.drawable.ic_gro to "gro",
-        R.drawable.ic_community to "community",
-        R.drawable.ic_campaign to "campaign",
-        R.drawable.ic_envelope to "envelope"
+        R.drawable.ic_look to "Look",
+        R.drawable.ic_gro to "Grow",
+        R.drawable.ic_community to "Community",
+        R.drawable.ic_campaign to "Campaign",
+        R.drawable.ic_envelope to "Envelope"
     )
-    NavigationBar(
-        containerColor = Color.Transparent
-    ) {
+    NavigationBar(containerColor = Color.Transparent) {
         icons.forEach { (iconId, description) ->
             NavigationBarItem(
                 icon = {
@@ -118,6 +122,6 @@ fun TwitterBottomBar() {
 @Composable
 fun TwitterScreenPreview() {
     val navController = rememberNavController()
-    val tweets = generateTweetsForUsers() // Simulando los tweets generados
+    val tweets = generateTweetsForUsers()
     TwitterScreen(navController = navController, tweets = tweets)
 }

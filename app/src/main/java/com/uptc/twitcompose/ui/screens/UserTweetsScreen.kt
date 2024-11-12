@@ -1,11 +1,6 @@
 package com.uptc.twitcompose.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -24,83 +19,95 @@ import com.uptc.twitcompose.model.generateTweetsForUsers
 import com.uptc.twitcompose.ui.composables.TweetItem
 import com.uptc.twitcompose.R
 
+/**
+ * Pantalla que muestra los tweets de un usuario específico.
+ * @param navController Controlador de navegación.
+ * @param userName Nombre del usuario.
+ * @param tweets Lista de tweets.
+ */
 @Composable
 fun UserTweetsScreen(navController: NavController, userName: String, tweets: List<Tweet>) {
     Scaffold(
         topBar = {
-            Column {
-                LazyRow(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth()
-                ) {
-                    item {
-                        Text(
-                            text = userName,
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(end = 250.dp)
-
-                        )
-                    }
-                    item {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            IconButton(
-                                onClick = { /* Acción de búsqueda */ },
-                                modifier = Modifier.size(24.dp)
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_look),
-                                    contentDescription = "Buscar",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                            IconButton(
-                                onClick = { /* Acción de opciones */ },
-                                modifier = Modifier.size(24.dp)
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_dots),
-                                    contentDescription = "Más opciones",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-
-
-                // Segunda fila con botones de categorías, alineados a la izquierda
-                LazyRow(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    val sections = listOf("Publicaciones", "Respuestas", "Destacados", "Multimedia")
-                    sections.forEach { section ->
-                        item {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.padding(end = 20.dp)
-                            ) {
-                                Text(
-                                    text = section,
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            UserTweetsTopBar(userName = userName)
         }
     ) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(tweets.filter { it.userName == userName }) { tweet ->
                 TweetItem(navController = navController, tweet = tweet)
-                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+                Divider(thickness = 0.5.dp, color = Color.Gray)
+            }
+        }
+    }
+}
+
+/**
+ * Barra superior en la pantalla de Tweets de usuario.
+ * Muestra el nombre de usuario y opciones adicionales.
+ */
+@Composable
+fun UserTweetsTopBar(userName: String) {
+    Column {
+        LazyRow(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxWidth()
+        ) {
+            item {
+                Text(
+                    text = userName,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(end = 250.dp)
+                )
+            }
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    IconButton(
+                        onClick = { /* Acción de búsqueda */ },
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_look),
+                            contentDescription = "Buscar",
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                    IconButton(
+                        onClick = { /* Acción de opciones */ },
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_dots),
+                            contentDescription = "Más opciones",
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
+        }
+
+        LazyRow(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            val sections = listOf("Publicaciones", "Respuestas", "Destacados", "Multimedia")
+            sections.forEach { section ->
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(end = 20.dp)
+                    ) {
+                        Text(
+                            text = section,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
             }
         }
     }
