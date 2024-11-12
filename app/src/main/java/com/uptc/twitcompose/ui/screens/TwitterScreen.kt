@@ -35,7 +35,7 @@ fun TwitterScreen(navController: NavController, tweets: List<Tweet>) {
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(tweets) { tweet ->
                 TweetItem(navController = navController, tweet = tweet)
-                Divider(thickness = 0.5.dp, color = Color.Gray)
+                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
             }
         }
     }
